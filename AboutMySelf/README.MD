@@ -1,8 +1,10 @@
 # About MySelf #
-My name is Andrey. I am living in Rostov-on-Don, Russia. I have been working in IT already 13 years. From my hobbies I can select 2 favorites - chess and crossfit.
+My name is Andrey. I am living in Rostov-on-Don, Russia. I have been working in IT already 13 years. From my hobbies I can select 2 favorites - chess and crossfit.  
+
+**Telegram @andreyignatchenko**
 
 ## Why am I interested in the course ##
-- I want to get a new knoledge
+- I want to get a new knowledge
 - I want to join Andersen Company
 - I want to meet new IT people
 
