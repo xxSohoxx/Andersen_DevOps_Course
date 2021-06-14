@@ -1,0 +1,58 @@
+#!/bin/bash
+
+read -p "Please enter PID or programm name to start: " pid
+read -p "How many hosts do you want to see? " rownumber
+
+#checking if user has root privileges
+while true; do
+	read -p "In order to get the full information you need to have root privileges. Do you have it? (answer yes or no): " answer
+	case $answer in
+		[Y|y|yes|Yes] ) priv="sudo"; break;;
+		[N|n|no|No]* ) priv=""; break;;
+		* ) echo "Please enter yes or no";; 
+	esac
+done
+
+#retrieve sets of IP addresses and connection statuses
+ipcon=$($priv netstat -tulpan | awk -v pid=$pid '$0 ~ pid {print $5 ":" $6}' | uniq | tail -n$rownumber)
+
+
+for set in $ipcon
+do
+
+#assigning IP, Organization, Connection status and tech emails to variables
+	ipaddress=$(echo $set | awk -F':' '{print $1}')
+	org=$(whois $ipaddress | awk -F':' '/^Organization/ {print $2}')
+	connection=$(echo $set | awk -F':' '{print $3}')
+	techmail=$(whois $ipaddress | awk -F':' '/^OrgTechEmail/ {print $2}')
+
+#printing results to the user
+	if [[ -z $org ]] 
+	then
+		continue
+		#echo "Sorry, there is no Organization in Whois for IP: " $ipaddress
+	else
+		echo "Organization: " $org " IP address is: " $ipaddress
+	fi
+	
+	if [[ -z $techmail ]]
+	then 
+		continue
+	else
+		echo "Organization technical email: " $techmail
+	fi
+
+	if [[ $connection =~ [0-9] ]]
+	then
+	echo "---------------------------------------------------------------------------"
+		continue
+	else
+		echo "Connection status is: " $connection
+	fi
+
+        echo "---------------------------------------------------------------------------"
+done
+
+
+
+
