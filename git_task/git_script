@@ -1,15 +1,18 @@
 #!/bin/bash
 
+#Request data from user
+
 read -p "Please enter the GitHub repository link: " link
 read -p "You also need to provide you GitHub Authorization token in order to send API requests: " token
+
 #Retrieve repository and user variables from the link
 
 user=$(echo $link | awk -F/ '$0=$4')
 repo=$(echo $link | awk -F/ '$0=$5')
 justline=$(echo "--------------------------------------------------------------------------------------------------------------")
-
 i=0
-#checking any openned PR
+
+#Check any openned PR
  
 open_pr=$(curl -s -H "Authorization: token $token" https://api.github.com/repos/$user/$repo/pulls?state=open |jq '.[0].state') 
 if [[ "$open_pr" == null ]]; then
@@ -23,13 +26,15 @@ else
 	echo $justline
 fi
 
+#Generate list of contributors and contributors who added labels
+
 contributors=""
 contributors_labels=""
 
 while [ $(curl -s -H "Authorization: token $token" https://api.github.com/repos/$user/$repo/pulls?state=all |jq --argjson n "$i" '.[$n].state') != null ]; do
 
-#	echo -e $(curl -s https://api.github.com/repos/$user/$repo/pulls?state=open |jq --argjson n "$i" '.[$n].user.login') " created Pull request"$'\n'
 	requestor=$(curl -s -H "Authorization: token $token" https://api.github.com/repos/$user/$repo/pulls?state=all |jq --argjson n "$i" '.[$n].user.login')
+	#Check if there is a label in reply, if so take contributor and add it to contributor_lavels var
 	if [[ $(curl -s -H "Authorization: token $token" https://api.github.com/repos/$user/$repo/pulls?state=all |jq --argjson n "$i" '.[$n].labels' |jq '.[0].id') -ne null ]]; then
 		contributors_labels="${contributors_labels}${requestor}\n"
 	fi
@@ -38,6 +43,8 @@ while [ $(curl -s -H "Authorization: token $token" https://api.github.com/repos/
 	contributors="${contributors}${requestor}\n"
 #	echo $i
 done
+
+#Printing results to the screen
 
 echo -e $contributors |awk 'NF'| sort | uniq -d
 echo $justline
@@ -49,5 +56,4 @@ if [[ -n $(echo $contributors_labels) ]]; then
 	echo -e $contributors_labels |awk 'NF' | sort |uniq -c
 	echo $justline
 fi
-#echo -e $result
 
