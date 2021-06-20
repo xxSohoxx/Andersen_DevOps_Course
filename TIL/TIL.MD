@@ -7,3 +7,5 @@
 - 05.06 I've learned how to set jobs to run manually on GitLab.
 - 06.06 I've learned how to trigger a pipeline from another project in GitLab
 - 07.06 I've learned how to connect Cisco switches as a stack.
+- 19.06 I've learned how to make basic requests with GitHub API.
+- 20.06 I've learned how to work with jq.
