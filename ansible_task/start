@@ -1,0 +1,4 @@
+#/bin/bash
+
+ansible-playbook --become-user $USER  -i ./inventory/inventory ./ansible/test.yml
+

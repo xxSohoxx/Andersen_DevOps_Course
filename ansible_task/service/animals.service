@@ -1,0 +1,13 @@
+[Unit]
+Description=Animasl web application
+After=network.target
+
+[Service]
+User=root
+Type=simple
+WorkingDirectory=/opt/animals_app/
+ExecStart=/usr/bin/python3 /opt/animals_app/app.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

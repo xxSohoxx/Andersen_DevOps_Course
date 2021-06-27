@@ -1,0 +1,72 @@
+---
+
+- hosts: all
+  become: true
+
+  tasks:
+
+  - name: Install pip
+    apt:
+      pkg:
+        - python-pip
+        - python3-pip
+        - ufw
+        - python3-setuptools
+
+  - name: Install Flask with pip
+    pip:
+      name: flask
+      executable: pip3
+      virtualenv_python: /usr/bin/python3
+ 
+  - name: Make sure a service ufw is running and will start after reboot
+    ansible.builtin.systemd:
+      state: started
+      name: ufw
+      enabled: yes
+
+
+  - name: Make sure ufw is stopped before configuring and all rules are reset
+    ufw:
+      state: reset            
+
+  - name: Configure ufw
+    command: "{{ item }}"
+    with_items:
+      - ufw allow 22,80,443/tcp
+      - ufw allow 22,80,443/udp
+      - ufw default deny incoming
+      - ufw default allow outgoing
+
+  - name: Make sure ufw is enabled
+    ufw:
+      state: enabled
+
+  - name: Ensures /opt/animals_app/ dir exists
+    ansible.builtin.file:
+      path: /opt/animals_app/ 
+      state: directory
+
+  - name: Copy app data
+    ansible.builtin.copy:
+      src: ../app.py
+      dest: /opt/animals_app/app.py
+
+  - name: Copy service file
+    ansible.builtin.copy:
+      src: ../service/animals.service
+      dest: /etc/systemd/system/
+
+  - name: Force systemd to reread configs
+    ansible.builtin.systemd:
+      daemon_reload: yes 
+
+  - name: Make sure a service animals is running and will start after reboot
+    ansible.builtin.systemd:
+      state: started
+      name: animals.service
+      enabled: yes
+
+
+
+
