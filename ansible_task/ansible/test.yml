@@ -19,12 +19,13 @@
       executable: pip3
       virtualenv_python: /usr/bin/python3
  
+
+
   - name: Make sure a service ufw is running and will start after reboot
     ansible.builtin.systemd:
       state: started
       name: ufw
       enabled: yes
-
 
   - name: Make sure ufw is stopped before configuring and all rules are reset
     ufw:
@@ -41,6 +42,8 @@
   - name: Make sure ufw is enabled
     ufw:
       state: enabled
+
+
 
   - name: Ensures /opt/animals_app/ dir exists
     ansible.builtin.file:
@@ -69,4 +72,22 @@
 
 
 
+  - name: Disable root login over SSH
+    lineinfile: 
+      path: /etc/ssh/sshd_config 
+      regexp: "^PermitRootLogin" 
+      line: "PermitRootLogin no" 
+      state: present
 
+  - name: Disable password login
+    lineinfile: 
+      dest: /etc/ssh/sshd_config 
+      regexp: "^PasswordAuthentication" 
+      line: "PasswordAuthentication no" 
+      state: present
+
+  - name: Restart sshd
+    systemd:
+      name: sshd
+      state: restarted
+   
