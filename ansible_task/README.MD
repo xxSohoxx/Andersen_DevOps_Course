@@ -30,4 +30,5 @@ This is an Ansible task, so you also need to have Ansible installed on your work
 ### Deploy the service ###
 * You need to clone current git repository by sending a command: *git clone https://github.com/xxSohoxx/Andersen_DevOps_Course* 
 * Then you need to change directory: *cd Andersen_DevOps_Course/ansible_task/*
+* You need to add IP address of your remote VM to the file Andersen_DevOps_Course/ansible_task/inventory/inventory
 * And run a command: *ansible-playbook  -i ./inventory/inventory -K ./ansible/deploy.yml*
