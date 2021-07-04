@@ -1,7 +1,8 @@
 # This is a simple python app which receives JSON objects and return strings
 
-# import main Flask class and request object
+# import main Flask class, request object. And from emoji importing emojize method
 from flask import Flask, request
+from emoji import emojize
 
 # create the Flask app
 app = Flask(__name__)
@@ -19,7 +20,7 @@ def json_example():
     sound = request_data['sound']
     count = request_data['count']
     for i in range(count):
-         reply+= (animal + " says " + sound + "\n")
+         reply+= (emojize(":" + animal + ":") + " says " + sound + "\n")
     reply+= "Made with Love by june!\n"
     return reply
 

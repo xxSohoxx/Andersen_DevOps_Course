@@ -20,6 +20,12 @@
       virtualenv_python: /usr/bin/python3
  
 
+  - name: Install emoji with pip
+    pip:
+      name: emoji
+      executable: pip3
+      virtualenv_python: /usr/bin/python3
+
 
   - name: Make sure a service ufw is running and will start after reboot
     ansible.builtin.systemd:
