@@ -11,3 +11,5 @@
 - 20.06 I've learned how to work with jq.
 - 23.06 I've learned run simple Ansible playbook.
 - 28.06 I've learned couple of things about VxLAN technology. 
+- 04.07 I've learned how to use Emoji in python.
+- 
