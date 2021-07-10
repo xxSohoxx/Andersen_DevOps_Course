@@ -14,4 +14,5 @@ Telegram Bot - **@AndersenJuneBot**
 * [Here](https://core.telegram.org/bots/#3-how-do-i-create-a-bot) you can find how to create a Telegram bot and get a Token  
 * Then you need to install Go on your working station. You can use the guidence from [here](https://golang.org/doc/install).   
 * Please ensure the library is installed and up to date by running *go get -u github.com/go-telegram-bot-api/telegram-bot-api*  
-* Clone this repository or just copy the code to your working directory. And then run *go build .* command to compile the code into an executable file. And then just run this file. 
+* Clone this repository or just copy the code to your working directory. Don't forget to replace **YOUR_BOT_TOKEN** by your bot token at the row number 13 while we create new BotAPI instance!
+* And then run *go build .* command to compile the code into an executable file. And then just run this file. 
