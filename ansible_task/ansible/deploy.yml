@@ -3,6 +3,9 @@
 - hosts: all
   become: true
 
+  vars_files:
+    - vars/certificate.yml
+
   tasks:
 
   - name: Install pip
@@ -73,15 +76,31 @@
       src: ../service/animals.service
       dest: /etc/systemd/system/
 
-  - name: Copy SSL key
-    ansible.builtin.copy:
-      src: ../certificate/nginx.key
-      dest: /etc/nginx/ssl/nginx.key
+ # - name: Copy SSL key
+ #   ansible.builtin.copy:
+ #     src: ../certificate/nginx.key
+ #     dest: /etc/nginx/ssl/nginx.key
 
-  - name: Copy SSL certificate
-    ansible.builtin.copy:
-      src: ../certificate/nginx.crt
+  - name: make sure SSL private key is installed
+    copy:
+      content: '{{ ssl_private_key }}'
+      dest: /etc/nginx/ssl/nginx.key
+      owner: root
+      group: root
+      mode: 0600
+
+ # - name: Copy SSL certificate
+ #   ansible.builtin.copy:
+  #    src: ../certificate/nginx.crt
+   #   dest: /etc/nginx/ssl/nginx.crt
+
+  - name: make sure SSL certificate is installed
+    copy:
+      content: '{{ ssl_certificate }}'
       dest: /etc/nginx/ssl/nginx.crt
+      owner: root
+      group: root
+      mode: 0644
 
   - name: Copy NGINX config file
     ansible.builtin.copy:
@@ -90,7 +109,18 @@
 
   - name: Force systemd to reread configs
     ansible.builtin.systemd:
-      daemon_reload: yes 
+      daemon_reload: yes
+
+  - name: Make sure a nginx is running and will start after reboot
+    ansible.builtin.systemd:
+      state: started
+      name: nginx.service
+      enabled: yes 
+
+  - name: Reload service bginx, in all cases
+    ansible.builtin.systemd:
+      name: nginx.service
+      state: reloaded
 
   - name: Make sure a service animals is running and will start after reboot
     ansible.builtin.systemd:
