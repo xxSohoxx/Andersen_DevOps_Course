@@ -7,11 +7,13 @@
 
   - name: Install pip
     apt:
+      update_cache: yes
       pkg:
         - python-pip
         - python3-pip
         - ufw
         - python3-setuptools
+        - nginx
 
   - name: Install Flask with pip
     pip:
@@ -56,6 +58,11 @@
       path: /opt/animals_app/ 
       state: directory
 
+  - name: Ensures /etc/nginx/ssl/ dir for certificates exists
+    ansible.builtin.file:
+      path: /etc/nginx/ssl/
+      state: directory
+
   - name: Copy app data
     ansible.builtin.copy:
       src: ../app.py
@@ -65,6 +72,21 @@
     ansible.builtin.copy:
       src: ../service/animals.service
       dest: /etc/systemd/system/
+
+  - name: Copy SSL key
+    ansible.builtin.copy:
+      src: ../certificate/nginx.key
+      dest: /etc/nginx/ssl/nginx.key
+
+  - name: Copy SSL certificate
+    ansible.builtin.copy:
+      src: ../certificate/nginx.crt
+      dest: /etc/nginx/ssl/nginx.crt
+
+  - name: Copy NGINX config file
+    ansible.builtin.copy:
+      src: ../nginx.conf
+      dest: /etc/nginx/nginx.conf
 
   - name: Force systemd to reread configs
     ansible.builtin.systemd:
