@@ -13,3 +13,4 @@
 - 28.06 I've learned couple of things about VxLAN technology. 
 - 04.07 I've learned how to use Emoji in python.
 - 09.07 I've learned what is the fastest way to deploy telegram bot on Go
+- 14.07 I've learned where can be the bottleneck if DB works slowly 
