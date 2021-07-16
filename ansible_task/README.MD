@@ -32,4 +32,5 @@ This is an Ansible task, so you also need to have Ansible installed on your work
 * Then you need to change directory: *cd Andersen_DevOps_Course/ansible_task/*
 * You need to add IP address of your remote VM to the file Andersen_DevOps_Course/ansible_task/inventory/inventory
 * And run a command: *ansible-playbook  -i ./inventory/inventory -K ./ansible/deploy.yml --ask-vault-pass*
+* Then you need to enter your password on the VM and password for Ansible vault which is: **andersen**  
 * You can check the service by running a command, where VM_IP_ADDRESS is IP address of your Debian VM: *curl -k -XPOST -d'{"animal":"tiger", "sound":"Rrrr", "count": 3}' https://VM_IP_ADDRESS:443* 
