@@ -14,8 +14,8 @@ We are free to choose any CI/CD, infrastructure, Registry and Control version to
 # Result #
 
 Application is running on AWS platform and can be accessed by the links below:  
-http://ec2-54-93-104-116.eu-central-1.compute.amazonaws.com:8001/  
-http://ec2-54-93-104-116.eu-central-1.compute.amazonaws.com:8002/  
+http://ec2-54-93-104-116.eu-central-1.compute.amazonaws.com:8001/  - Built on Python  
+http://ec2-54-93-104-116.eu-central-1.compute.amazonaws.com:8002/  - Built on Go  
 
 # How it works #
 
@@ -30,7 +30,8 @@ Below are the repositories I created for the applications:
 ### Infrastructure ###
 
 The application is deployed on AWS EC2 instance. OS was chosen - Debian Linux.  
-Infrastructure preparation and configuring is presented on separate repository - https://gitlab.com/andersen_devops_course/andersen_infra_deploy
+Infrastructure preparation and configuring are presented on the separate repository:  
+* https://gitlab.com/andersen_devops_course/andersen_infra_deploy
 
 ### Additions ###
 
