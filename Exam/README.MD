@@ -33,6 +33,10 @@ The application is deployed on AWS EC2 instance. OS was chosen - Debian Linux.
 Infrastructure preparation and configuring are presented on the separate repository:  
 * https://gitlab.com/andersen_devops_course/andersen_infra_deploy
 
+### Visualization ###
+
+There is a **diagram.pdf** file in the repository which shows the current solution on the first slide and possible solution which can be implemented without time limits.
+
 ### Additions ###
 
 * Notifications are configured via GitLab built-in tool:
